@@ -27,7 +27,6 @@ public class SimpleCalculator extends JFrame {
             Graphics2D g2d = (Graphics2D) g;
             int w = getWidth();
             int h = getHeight();
-            // Create a vertical gradient from color1 to color2
             GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, w, h);
@@ -36,21 +35,18 @@ public class SimpleCalculator extends JFrame {
 
     public SimpleCalculator() {
         setTitle("Simple Calculator");
-        setSize(500, 450); // Increased height for better gradient visibility
+        setSize(500, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        // Create a GradientPanel and set it as the content pane
-        GradientPanel gradientPanel = new GradientPanel(new Color(150, 200, 250), new Color(250, 200, 150)); // Blue to Orange gradient
-        gradientPanel.setLayout(new GridBagLayout()); // GradientPanel will now hold the GridBagLayout
-        setContentPane(gradientPanel); // Set gradientPanel as the content pane
+
+        GradientPanel gradientPanel = new GradientPanel(new Color(150, 200, 250), new Color(250, 200, 150));
+        gradientPanel.setLayout(new GridBagLayout());
+        setContentPane(gradientPanel);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Padding around components
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        // --- Main Screen Image ---
-        // User should place an image file (e.g., 'main_calculator.png') in the same directory as SimpleCalculator.java
-        // or provide a full path. If not found, the label will be empty.
-        String mainImagePath = "main_calculator.png"; // <-- Change this path if your image is elsewhere
+        // Main Image
+        String mainImagePath = "main_calculator.png";
         ImageIcon mainImageIcon = null;
         try {
             mainImageIcon = new ImageIcon(new ImageIcon(mainImagePath).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
@@ -60,44 +56,43 @@ public class SimpleCalculator extends JFrame {
         imageLabel = new JLabel(mainImageIcon);
         imageLabel.setPreferredSize(new Dimension(100, 100));
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 4; gbc.fill = GridBagConstraints.CENTER;
-        gradientPanel.add(imageLabel, gbc); // Add to gradientPanel
+        gradientPanel.add(imageLabel, gbc);
 
-        // --- Number 1 Input ---
+        // Number 1
         gbc.gridwidth = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0; gbc.gridy = 1; gradientPanel.add(new JLabel("Number 1:"), gbc);
         num1Field = new JTextField();
-        num1Field.setBackground(new Color(255, 255, 200)); // Light yellow background for input fields
+        num1Field.setBackground(new Color(255, 255, 200));
         gbc.gridx = 1; gbc.gridy = 1; gbc.gridwidth = 3;
-        gradientPanel.add(num1Field, gbc); // Add to gradientPanel
+        gradientPanel.add(num1Field, gbc);
 
-        // --- Number 2 Input ---
+        // Number 2
         gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 1; gradientPanel.add(new JLabel("Number 2:"), gbc);
         num2Field = new JTextField();
-        num2Field.setBackground(new Color(255, 255, 200)); // Light yellow background for input fields
+        num2Field.setBackground(new Color(255, 255, 200));
         gbc.gridx = 1; gbc.gridy = 2; gbc.gridwidth = 3;
-        gradientPanel.add(num2Field, gbc); // Add to gradientPanel
+        gradientPanel.add(num2Field, gbc);
 
-        // --- Operation Buttons ---
+        // Operation Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        buttonPanel.setOpaque(false); // Make transparent to show gradient
-        
+        buttonPanel.setOpaque(false);
+
         JButton addButton = new JButton("+");
-        addButton.setBackground(new Color(100, 200, 100)); // Green
+        addButton.setBackground(new Color(100, 200, 100));
         addButton.setForeground(Color.WHITE);
 
         JButton subButton = new JButton("-");
-        subButton.setBackground(new Color(200, 100, 100)); // Red
+        subButton.setBackground(new Color(200, 100, 100));
         subButton.setForeground(Color.WHITE);
 
         JButton mulButton = new JButton("*");
-        mulButton.setBackground(new Color(100, 100, 200)); // Blue
+        mulButton.setBackground(new Color(100, 100, 200));
         mulButton.setForeground(Color.WHITE);
 
         JButton divButton = new JButton("/");
-        divButton.setBackground(new Color(200, 200, 100)); // Yellow
+        divButton.setBackground(new Color(200, 200, 100));
         divButton.setForeground(Color.BLACK);
 
-        // Set smaller preferred size for buttons
         Dimension buttonSize = new Dimension(50, 30);
         addButton.setPreferredSize(buttonSize);
         subButton.setPreferredSize(buttonSize);
@@ -110,24 +105,24 @@ public class SimpleCalculator extends JFrame {
         buttonPanel.add(divButton);
 
         gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 4; gbc.fill = GridBagConstraints.NONE;
-        gradientPanel.add(buttonPanel, gbc); // Add to gradientPanel
+        gradientPanel.add(buttonPanel, gbc);
 
-        // --- Result Display ---
-        gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
+        // Result
+        gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 1;
         JLabel resultLabelText = new JLabel("Result:");
-        resultLabelText.setForeground(Color.DARK_GRAY); // Dark gray text for labels
+        resultLabelText.setForeground(Color.DARK_GRAY);
         gradientPanel.add(resultLabelText, gbc);
-        
+
         resultLabel = new JLabel("0.0");
         resultLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         resultLabel.setBackground(Color.WHITE);
         resultLabel.setOpaque(true);
         resultLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        resultLabel.setFont(new Font("SansSerif", Font.BOLD, 18)); // Larger, bold font
+        resultLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
         gbc.gridx = 1; gbc.gridy = 4; gbc.gridwidth = 3;
-        gradientPanel.add(resultLabel, gbc); // Add to gradientPanel
+        gradientPanel.add(resultLabel, gbc);
 
-        // --- Action Listener for Buttons ---
+        // Action Listener
         ActionListener listener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -178,13 +173,6 @@ public class SimpleCalculator extends JFrame {
         setVisible(true);
     }
 
-    /**
-     * Displays the calculation result in a small pop-up window with an image.
-     * @param resultText The result to display.
-     * @param imagePath The path to the image file to show in the pop-up.
-     *                  User should place image files (e.g., 'add_icon.png', 'error_icon.png')
-     *                  in the same directory as SimpleCalculator.java or provide full paths.
-     */
     private void showResultPopup(String resultText, String imagePath) {
         JDialog popup = new JDialog(this, "Calculation Result", true);
         popup.setSize(300, 200);
@@ -224,4 +212,3 @@ public class SimpleCalculator extends JFrame {
         });
     }
 }
-
